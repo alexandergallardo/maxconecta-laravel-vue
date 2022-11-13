@@ -170,7 +170,7 @@ class RentalController extends BaseController
      * @return Response
      * @throws ValidationException
      * @OA\Put (
-     *     path="/api/rentañ/{id}",
+     *     path="/api/rental/{id}",
      *     operationId="updateRental",
      *     tags={"Rental"},
      *     summary="Actualiza alquiler por ID",
