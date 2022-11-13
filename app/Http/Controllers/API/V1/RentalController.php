@@ -20,14 +20,15 @@ class RentalController extends BaseController
      * Display a listing of the resource.
      *
      * @return Response
-     *
      * @OA\Get(
      *     path="/api/rental",
-     *     tags={"rental"},
-     *     summary="Mostrar el listado de alquiler",
+     *     operationId="getRentalList",
+     *     tags={"Rental"},
+     *     summary="Mostrar listado de alquiler",
+     *     description="Retorna lista de alquiler",
      *     @OA\Response(
      *         response=200,
-     *         description="Mostrar todas los alquileres."
+     *         description="successful operation",
      *     ),
      *     @OA\Response(
      *         response="default",
@@ -49,6 +50,55 @@ class RentalController extends BaseController
      *
      * @return Response
      * @throws ValidationException
+     * @OA\Post (
+     *     path="/api/rentall",
+     *     operationId="createRental",
+     *     tags={"Rental"},
+     *     summary="Crear un alquiler",
+     *     description="Crea un alquiler y retorna Informacion del alquiler creado",
+     *     @OA\RequestBody(
+     *         description="Rental object that needs to be created",
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      property="delivery",
+     *                      type="date",
+     *                      description="Fecha de alquiler - entrega a cliente (YYYY-MM-DD)"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="client_id",
+     *                      type="integer",
+     *                      description="ID del cliente"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="movie_id",
+     *                      type="integer",
+     *                      description="ID de la pelicula"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="description",
+     *                      type="string",
+     *                      description="Descripcion"
+     *                 ),
+     *             )
+     *         )
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         description="Mostrar info de alquiler creado."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="No se ha encontrado el cliente o pelicula."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
     public function store(Request $request)
     {
@@ -116,6 +166,69 @@ class RentalController extends BaseController
      *
      * @return Response
      * @throws ValidationException
+     * @OA\Put (
+     *     path="/api/rentañ/{id}",
+     *     operationId="updateRental",
+     *     tags={"Rental"},
+     *     summary="Actualiza alquiler por ID",
+     *     description="Actualiza alquiler y retorna Informacion actualizada",
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="ID Alquiler",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
+     *     @OA\RequestBody(
+     *         description="Rental object that needs to be created",
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      property="delivery",
+     *                      type="date",
+     *                      description="Fecha de alquiler - entrega a cliente (YYYY-MM-DD)"
+     *                 ),
+     *                  @OA\Property(
+     *                      property="entry",
+     *                      type="date",
+     *                      description="Fecha de entrada - devolución del cliente (YYYY-MM-DD)"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="client_id",
+     *                      type="integer",
+     *                      description="ID del cliente"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="movie_id",
+     *                      type="integer",
+     *                      description="ID de la pelicula"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="description",
+     *                      type="string",
+     *                      description="Descripcion"
+     *                 ),
+     *             )
+     *         )
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         description="Mostrar info de alquiler creado."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="No se ha encontrado del alquiler o cliente o pelicula."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
     public function update(Request $request, $id)
     {
@@ -167,15 +280,17 @@ class RentalController extends BaseController
      * @return Response
      * @OA\Get(
      *     path="/api/rental/{id}",
-     *     tags={"rental"},
-     *     summary="Mostrar info de un alquiler",
+     *     operationId="getRentalById",
+     *     tags={"Rental"},
+     *     summary="Mostrar Informacion del alquiler",
+     *     description="Retorna informacion de un alquiler",
      *     @OA\Parameter(
-     *         description="Parámetro necesario para la consulta de datos de un alquiler",
+     *         description="Parámetro necesario para la consulta de datos",
      *         in="path",
      *         name="id",
      *         required=true,
      *         @OA\Schema(type="integer"),
-     *         @OA\Examples(example="int", value="1", summary="Introduce un número de id de alquiler.")
+     *         @OA\Examples(example="int", value="1", summary="Introduce un número de id de usuario.")
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -183,7 +298,7 @@ class RentalController extends BaseController
      *     ),
      *     @OA\Response(
      *         response=404,
-     *         description="No se ha encontrado el alquiler."
+     *         description="No se ha encontrado el alquiler"
      *     ),
      *     @OA\Response(
      *         response="default",
@@ -208,6 +323,36 @@ class RentalController extends BaseController
      *
      * @param  int  $id
      * @return Response
+     * @OA\Delete (
+     *     path="/api/rental/{id}",
+     *     operationId="deleteRental",
+     *     tags={"Rental"},
+     *     summary="Elimina lquiler por ID",
+     *     description="Elimina alquiler y retorna Informacion de alquielr eliminado",
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="ID alquiler",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         description="Mostrar info de alquiler eliminado."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="No se ha encontrado el alquiler."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
     public function destroy($id)
     {

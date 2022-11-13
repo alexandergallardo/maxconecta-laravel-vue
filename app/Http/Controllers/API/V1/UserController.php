@@ -41,11 +41,13 @@ class UserController extends BaseController
      *
      * @OA\Get(
      *     path="/api/user",
-     *     tags={"user"},
-     *     summary="Mostrar el listado de usuarios",
+     *     operationId="getUsersList",
+     *     tags={"User"},
+     *     summary="Mostrar listado de usuarios",
+     *     description="Retorna lista de usuarios",
      *     @OA\Response(
      *         response=200,
-     *         description="Mostrar todas los usuarios."
+     *         description="successful operation",
      *     ),
      *     @OA\Response(
      *         response="default",
@@ -71,6 +73,56 @@ class UserController extends BaseController
      *
      * @return Response
      * @throws ValidationException
+     * @OA\Post (
+     *     path="/api/user",
+     *     operationId="createUser",
+     *     tags={"User"},
+     *     summary="Crear un  usuario",
+     *     description="Crea un usuario y retorna Informacion del usuario creado",
+     *     @OA\RequestBody(
+     *         description="User object that needs to be created",
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      property="type",
+     *                      type="string",
+     *                      description="Role del Usuario (Administrador / Encargado)"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="name",
+     *                      type="string",
+     *                      description="Nombre del Usuario"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="username",
+     *                      type="string",
+     *                      description="username"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="email",
+     *                      type="string",
+     *                      description="Email"
+     *                 ),
+     *                  @OA\Property(
+     *                      property="password",
+     *                      type="string",
+     *                      description="Password"
+     *                 ),
+     *             )
+     *         )
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         description="Mostrar info de usuario creado."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
     public function store(Request $request)
     {
@@ -106,6 +158,70 @@ class UserController extends BaseController
      *
      * @return Response
      * @throws ValidationException
+     *
+     * @OA\Put (
+     *     path="/api/user/{id}",
+     *     operationId="updateUser",
+     *     tags={"User"},
+     *     summary="Actualiza usuario por ID",
+     *     description="Actualiza usuario y retorna Informacion del usuario actualizado",
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="ID Usuario",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
+     *     @OA\RequestBody(
+     *         description="User object that needs to be updated",
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      property="type",
+     *                      type="string",
+     *                      description="Role del Usuario (Administrador / Encargado)"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="name",
+     *                      type="string",
+     *                      description="Nombre del Usuario"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="username",
+     *                      type="string",
+     *                      description="username"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="email",
+     *                      type="string",
+     *                      description="Email"
+     *                 ),
+     *                  @OA\Property(
+     *                      property="password",
+     *                      type="string",
+     *                      description="Password"
+     *                 ),
+     *             )
+     *         )
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         description="Mostrar info de usuario actualizado."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="No se ha encontrado el usuario."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
     public function update(Request $request, $id)
     {
@@ -146,10 +262,12 @@ class UserController extends BaseController
      * @return Response
      * @OA\Get(
      *     path="/api/user/{id}",
-     *     tags={"user"},
-     *     summary="Mostrar info de un usuario",
+     *     operationId="getUserById",
+     *     tags={"User"},
+     *     summary="Mostrar Informacion de usuarios",
+     *     description="Retorna informacion de un usuario",
      *     @OA\Parameter(
-     *         description="Parámetro necesario para la consulta de datos de una empresa",
+     *         description="Parámetro necesario para la consulta de datos",
      *         in="path",
      *         name="id",
      *         required=true,
@@ -187,6 +305,37 @@ class UserController extends BaseController
      * Remove the specified resource from storage.
      * @param  int  $id
      * @return Response
+     * Delete user
+     * @OA\Delete (
+     *     path="/api/user/{id}",
+     *     operationId="deleteUser",
+     *     tags={"User"},
+     *     summary="Elimina usuario por ID",
+     *     description="Elimina usuario y retorna Informacion del usuario eliminado",
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="ID Usuario",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         description="Mostrar info de usuario eliminado."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="No se ha encontrado el usuario."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
     public function destroy($id)
     {

@@ -21,11 +21,13 @@ class ClientController extends BaseController
      *
      * @OA\Get(
      *     path="/api/client",
-     *     tags={"client"},
-     *     summary="Mostrar el listado de clientes",
+     *     operationId="getClientList",
+     *     tags={"Client"},
+     *     summary="Mostrar listado de clientes",
+     *     description="Retorna lista de clientes",
      *     @OA\Response(
      *         response=200,
-     *         description="Mostrar todas los clientes."
+     *         description="successful operation",
      *     ),
      *     @OA\Response(
      *         response="default",
@@ -47,6 +49,51 @@ class ClientController extends BaseController
      *
      * @return Response
      * @throws ValidationException
+     * @OA\Post (
+     *     path="/api/client",
+     *     operationId="createClient",
+     *     tags={"Client"},
+     *     summary="Crear un  cliente",
+     *     description="Crea un cliente y retorna Informacion del cliente creado",
+     *     @OA\RequestBody(
+     *         description="Client object that needs to be created",
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      property="name",
+     *                      type="string",
+     *                      description="Nombre del cliente"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="lastname",
+     *                      type="string",
+     *                      description="Apellidos del cliente"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="identification",
+     *                      type="string",
+     *                      description="Identificacion del cliente"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="description",
+     *                      type="string",
+     *                      description="Descripcion"
+     *                 ),
+     *             )
+     *         )
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         description="Mostrar info de cliente creado."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
     public function store(Request $request)
     {
@@ -81,6 +128,64 @@ class ClientController extends BaseController
      *
      * @return Response
      * @throws ValidationException
+     * @OA\Put (
+     *     path="/api/client/{id}",
+     *     operationId="updateClient",
+     *     tags={"Client"},
+     *     summary="Actualiza cliente por ID",
+     *     description="Actualiza cliente y retorna Informacion del cliente actualizado",
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="ID Cliente",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
+     *     @OA\RequestBody(
+     *         description="Client object that needs to be created",
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      property="name",
+     *                      type="string",
+     *                      description="Nombre del cliente"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="lastname",
+     *                      type="string",
+     *                      description="Apellidos del cliente"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="identification",
+     *                      type="string",
+     *                      description="Identificacion del cliente"
+     *                 ),
+     *                 @OA\Property(
+     *                      property="description",
+     *                      type="string",
+     *                      description="Descripcion"
+     *                 ),
+     *             )
+     *         )
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         description="Mostrar info de cliente actualizado."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="No se ha encontrado el cliente."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
     public function update(Request $request, $id)
     {
@@ -121,15 +226,17 @@ class ClientController extends BaseController
      * @return Response
      * @OA\Get(
      *     path="/api/client/{id}",
-     *     tags={"client"},
-     *     summary="Mostrar info de un cliente",
+     *     operationId="getClientById",
+     *     tags={"Client"},
+     *     summary="Mostrar Informacion de cliente",
+     *     description="Retorna informacion de un cliente",
      *     @OA\Parameter(
-     *         description="Parámetro necesario para la consulta de datos de un cliente",
+     *         description="Parámetro necesario para la consulta de datos",
      *         in="path",
      *         name="id",
      *         required=true,
      *         @OA\Schema(type="integer"),
-     *         @OA\Examples(example="int", value="1", summary="Introduce un número de id de cliente.")
+     *         @OA\Examples(example="int", value="1", summary="Introduce un número de id de usuario.")
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -163,6 +270,36 @@ class ClientController extends BaseController
      *
      * @param  int  $id
      * @return Response
+     * @OA\Delete (
+     *     path="/api/client/{id}",
+     *     operationId="deleteClient",
+     *     tags={"Client"},
+     *     summary="Elimina cliente por ID",
+     *     description="Elimina cliente y retorna Informacion del cliente eliminado",
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="ID Cliente",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         description="Mostrar info de cliente eliminado."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="No se ha encontrado el cliente."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
     public function destroy($id)
     {
