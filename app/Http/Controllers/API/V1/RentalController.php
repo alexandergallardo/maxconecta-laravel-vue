@@ -330,7 +330,7 @@ class RentalController extends BaseController
      *     path="/api/rental/{id}",
      *     operationId="deleteRental",
      *     tags={"Rental"},
-     *     summary="Elimina lquiler por ID",
+     *     summary="Elimina alquiler por ID",
      *     description="Elimina alquiler y retorna Informacion de alquielr eliminado",
      *     @OA\Parameter(
      *          name="id",
