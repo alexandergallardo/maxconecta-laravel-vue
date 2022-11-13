@@ -54,7 +54,7 @@ class RentalController extends BaseController
      * @return Response
      * @throws ValidationException
      * @OA\Post (
-     *     path="/api/rentall",
+     *     path="/api/rental",
      *     operationId="createRental",
      *     tags={"Rental"},
      *     summary="Crear un alquiler",
