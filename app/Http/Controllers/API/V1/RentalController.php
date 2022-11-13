@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,6 +20,20 @@ class RentalController extends BaseController
      * Display a listing of the resource.
      *
      * @return Response
+     *
+     * @OA\Get(
+     *     path="/api/rental",
+     *     tags={"rental"},
+     *     summary="Mostrar el listado de alquiler",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mostrar todas los alquileres."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
     public function index()
     {
@@ -146,10 +161,35 @@ class RentalController extends BaseController
     }
 
     /**
-     * Display the specified user.
+     * Display the specified rental.
      *
      * @param  int  $id
      * @return Response
+     * @OA\Get(
+     *     path="/api/rental/{id}",
+     *     tags={"rental"},
+     *     summary="Mostrar info de un alquiler",
+     *     @OA\Parameter(
+     *         description="Parámetro necesario para la consulta de datos de un alquiler",
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         @OA\Examples(example="int", value="1", summary="Introduce un número de id de alquiler.")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mostrar info de un alquiler."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="No se ha encontrado el alquiler."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
     public function show($id): Response
     {

@@ -6,24 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\ChangePasswordRequest;
 use App\Http\Requests\Users\ProfileUpdateRequest;
 use App\Models\User;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class ProfileController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
 
     /**
      * Return the user data
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function profile()
     {
@@ -39,17 +32,17 @@ class ProfileController extends Controller
     /**
      * Update the profile by users
      *
-     * @param  \App\Http\Requests\Users\ProfileUpdateRequest  $request
+     * @param ProfileUpdateRequest $request
      *
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @return Response
+     * @throws ValidationException
      */
     public function updateProfile(ProfileUpdateRequest $request)
     {
         $user = auth('api')->user();
 
         $user->update([
-            'name' => $request['name'], 
+            'name' => $request['name'],
             'email' => $request['email']
         ]);
 
@@ -65,9 +58,9 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Users\ChangePasswordRequest  $request
+     * @param ChangePasswordRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function changePassword(ChangePasswordRequest $request)
     {

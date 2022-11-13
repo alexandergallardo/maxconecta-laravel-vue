@@ -39,6 +39,13 @@ A very simple Laravel 8 + Vue 2 + AdminLTE 3 based template for SPA Application.
 - npm run dev
 - php artisan serve
 
+## SWAGGER
+- composer require "darkaonline/l5-swagger"
+- php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
+- Add `.env`:  L5_SWAGGER_GENERATE_ALWAYS=true
+- php artisan l5-swagger:generate
+- Url: http://localhost:8000/api/documentation
+
 #### Url:  http://localhost:8000
 ```bash
 Credenciales Administrador

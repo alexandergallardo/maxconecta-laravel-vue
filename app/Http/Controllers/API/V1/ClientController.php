@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,9 +16,22 @@ class ClientController extends BaseController
 {
 
     /**
-     * Display a listing of the resource.
-     *
+     * Mostramos el listado de Clientes registrados.
      * @return Response
+     *
+     * @OA\Get(
+     *     path="/api/client",
+     *     tags={"client"},
+     *     summary="Mostrar el listado de clientes",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mostrar todas los clientes."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
     public function index()
     {
@@ -101,10 +115,35 @@ class ClientController extends BaseController
     }
 
     /**
-     * Display the specified user.
+     * Display the specified client.
      *
      * @param  int  $id
      * @return Response
+     * @OA\Get(
+     *     path="/api/client/{id}",
+     *     tags={"client"},
+     *     summary="Mostrar info de un cliente",
+     *     @OA\Parameter(
+     *         description="Parámetro necesario para la consulta de datos de un cliente",
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         @OA\Examples(example="int", value="1", summary="Introduce un número de id de cliente.")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mostrar info de un cliente."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="No se ha encontrado el cliente."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
     public function show($id): Response
     {

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,9 +15,23 @@ class MovieController extends BaseController
 {
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the movies.
      *
      * @return Response
+     *
+     * @OA\Get(
+     *     path="/api/movie",
+     *     tags={"movie"},
+     *     summary="Mostrar el listado de  peliculas",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mostrar todas las peliculas."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
     public function index()
     {
@@ -104,12 +119,37 @@ class MovieController extends BaseController
     }
 
     /**
-     * Display the specified user.
+     * Display the specified movie.
      *
      * @param  int  $id
      * @return Response
+     * @OA\Get(
+     *     path="/api/movie/{id}",
+     *     tags={"movie"},
+     *     summary="Mostrar info de una pelicula",
+     *     @OA\Parameter(
+     *         description="Parámetro necesario para la consulta de datos de una pelicula",
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         @OA\Examples(example="int", value="1", summary="Introduce un número de id de pelicula.")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mostrar info de una pelicula."
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="No se ha encontrado la pelicula."
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
      */
-    public function show($id): Response
+    public function show($id)
     {
         try{
             $movie = Movie::findOrFail($id);
