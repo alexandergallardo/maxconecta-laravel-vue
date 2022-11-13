@@ -21,7 +21,11 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::post('change-password', 'ProfileController@changePassword');
     Route::get('movie/list', 'MovieController@list');
     Route::get('client/list', 'ClientController@list');
+    Route::get('client/countClients', 'ClientController@countClients');
     Route::get('rental/list', 'RentalController@list');
+    Route::get('movie/countMovies', 'MovieController@countMovies');
+    Route::get('rental/countRentals', 'RentalController@countRentals');
+
 
     Route::apiResources([
         'user' => 'UserController',

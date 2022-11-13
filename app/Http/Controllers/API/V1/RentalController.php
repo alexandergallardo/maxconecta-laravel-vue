@@ -387,4 +387,16 @@ class RentalController extends BaseController
 
         return $this->sendResponse($rentals, 'Lista de Peliculas');
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function countRentals()
+    {
+        $rentals = Rental::all()->count();
+
+        return $this->sendResponse($rentals, 'Cantidad de Alquileres');
+    }
 }

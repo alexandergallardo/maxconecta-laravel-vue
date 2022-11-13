@@ -330,4 +330,16 @@ class ClientController extends BaseController
 
         return $this->sendResponse($clients, 'Lista de Clientes');
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function countClients()
+    {
+        $clients = Client::all()->count();
+
+        return $this->sendResponse($clients, 'Cantidad de Clientes');
+    }
 }

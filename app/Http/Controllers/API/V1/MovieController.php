@@ -342,4 +342,16 @@ class MovieController extends BaseController
 
         return $this->sendResponse($movies, 'Lista de Peliculas');
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function countMovies()
+    {
+        $movies = Movie::all()->sum('stock');
+
+        return $this->sendResponse($movies, 'Cantidad de Peliculas en Stock');
+    }
 }
