@@ -23,6 +23,7 @@ A very simple Laravel 8 + Vue 2 + AdminLTE 3 based template for SPA Application.
 - Frontend and Backend User ACL with Gate Policy (type: Administradot/Encargado)
 - Simple Static Dashboard
 - Developer Options for OAuth Clients and Personal Access Token
+- Api Documentation with `Swagger` Open Source
 
 ## Installation
 
